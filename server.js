@@ -13,12 +13,19 @@ io.on("connection", (socket) => {
   // reserve event
   setTimeout( function() {
       socket.send('Data Transfer server to client');
-  },50000);
+  },500000);
 
   // custom event
   setTimeout( function() {
     socket.emit('customEvent','This is Custom Event');
-  },50000);
+  },500000);
+
+  // data receive from client
+  setTimeout( function() {
+    socket.on('message',function(msg){
+      console.log(msg);
+    });
+  },1000);
 
   socket.on("disconnect", () => {
     console.log("User Disconnected");

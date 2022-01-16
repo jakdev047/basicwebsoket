@@ -9,8 +9,8 @@
   <body>
     <h2>Soket IO</h2>
     <div>
-      <input type="text" id="name" class="form-control" placeholder="Name"/>
-      <button class="btn btn-primary">Send</button>
+      <input type="text" id="name" placeholder="Name"/>
+      <button id="sendMe">Send</button>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -25,6 +25,11 @@
       	document.write(msg);
       });
       // client to server
+      document.getElementById('sendMe').addEventListener('click',function(){
+        const name =  document.getElementById('name').value;
+        socket.send(name);
+      });
+
     </script>
   </body>
 </html>

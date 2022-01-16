@@ -7,13 +7,24 @@
     <title>Soket IO</title>
   </head>
   <body>
-      <h2>Soket IO</h2>
+    <h2>Soket IO</h2>
+    <div>
+      <input type="text" id="name" class="form-control" placeholder="Name"/>
+      <button class="btn btn-primary">Send</button>
+    </div>
 
-      <script src="/socket.io/socket.io.js"></script>
-      <script>
-        let socket = io();
-
-        console.log(socket);
-      </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let socket = io();
+      // reserve event
+      socket.on('message',function(msg){
+      	document.write(msg);
+      });
+      // custom event
+      socket.on('customEvent',function(msg){
+      	document.write(msg);
+      });
+      // client to server
+    </script>
   </body>
 </html>

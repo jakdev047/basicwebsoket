@@ -9,6 +9,17 @@ const io = new Server(expressServer);
 
 io.on("connection", (socket) => {
   console.log("New User Connected");
+
+  // reserve event
+  setTimeout( function() {
+      socket.send('Data Transfer server to client');
+  },50000);
+
+  // custom event
+  setTimeout( function() {
+    socket.emit('customEvent','This is Custom Event');
+  },50000);
+
   socket.on("disconnect", () => {
     console.log("User Disconnected");
   });

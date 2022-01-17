@@ -5,31 +5,77 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Soket IO</title>
+
+    <!-- all css file -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    />
   </head>
   <body>
-    <h2>Soket IO</h2>
-    <div>
-      <input type="text" id="name" placeholder="Name"/>
-      <button id="sendMe">Send</button>
+    <!-- Chatting History section -->
+    <div class="container my-3 bg-light">
+      <div class="row">
+        <div class="col-12">
+          <ul id="chatHis"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chatting Input section -->
+    <div class="container py-1 bg-light">
+      <div class="row my-3">
+        <div class="col-4">
+          <input
+            name="msg"
+            type="text"
+            class="form-control"
+            placeholder="Message"
+            id="msg"
+          />
+        </div>
+        <div class="col-2">
+          <button id="sendBtn" class="btn btn-primary">Send</button>
+        </div>
+      </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
       let socket = io();
-      // reserve event
-      socket.on('message',function(msg){
-      	document.write(msg);
-      });
-      // custom event
-      socket.on('customEvent',function(msg){
-      	document.write(msg);
-      });
-      // client to server
-      document.getElementById('sendMe').addEventListener('click',function(){
-        const name =  document.getElementById('name').value;
-        socket.send(name);
+      /* basic section
+
+        // reserve event
+        socket.on('message',function(msg){
+          document.write(msg);
+        });
+        // custom event
+        socket.on('customEvent',function(msg){
+          document.write(msg);
+        });
+        // client to server
+        document.getElementById('sendMe').addEventListener('click',function(){
+          const name =  document.getElementById('name').value;
+          socket.send(name);
+        });
+
+      */
+
+      document.getElementById("sendBtn").addEventListener("click", function () {
+        let msg = document.getElementById("msg").value;
+        // data send to Server
+        socket.emit("customEvent", msg);
+        msg = document.getElementById("msg").value = "";
       });
 
+      // reserve event
+      socket.on("chattingDataShow", function (msg) {
+        let chatHis = document.getElementById("chatHis");
+        let chatListItem =document.createElement("li");
+        chatListItem.className = 'list-group-item';
+        chatListItem.innerHTML = msg;
+        chatHis.appendChild(chatListItem);
+      });
     </script>
   </body>
 </html>
